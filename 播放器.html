@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link href="index.css" rel="stylesheet">
+	<script>
+	var arr=[
+		'演员.mp3',
+		'绅士.mp3',
+		'演员.mp3',
+		'绅士.mp3',
+		'演员.mp3',
+		'绅士.mp3',
+		'演员.mp3',
+		'绅士.mp3',
+		'演员.mp3',
+		'绅士.mp3',
+		'演员.mp3'
+	];
+	function random(n,m)
+	{
+		return parseInt(Math.random()*(m-n)+n);
+	}
+	window.onload=function (){
+		
+		var oA=document.querySelector('#a1');
+		var aLi=document.getElementsByTagName('li');
+		var oName=document.querySelector('#name');
+		var oBtn1=document.getElementById('btn1');
+		var oBtn2=document.getElementById('btn2');
+		var oPrev=document.getElementById('prev');
+		var oPause=document.getElementById('pause');
+		var oNext=document.getElementById('next');
+		//alert(aLi.length);
+		var iNow=0;
+		var loop=false;
+		var rnd=-false;
+		for(var i=0; i<aLi.length; i++)
+		{
+			(function (index){
+				aLi[i].ondblclick=function (){
+					//alert(1);
+					iNow=index;
+					tab();
+				};
+			})(i);
+		}
+		function tab()
+		{
+			//alert(1);
+			clear();
+			aLi[iNow].className='active';
+			oName.innerHTML=aLi[iNow].innerHTML;
+			oA.src='xzq/'+arr[iNow];
+			oA.play();
+		}
+		function clear()
+		{
+			for(var i=0; i<aLi.length; i++)
+			{
+				aLi[i].className='';
+			}
+		}
+
+		oA.onended=function (){
+			if(rnd)
+			{
+				iNow=random(0,arr.length);
+			}
+			else
+			{
+				iNow++;	
+			}
+			if(loop)
+			{
+				if(iNow==arr.length)
+				{
+					iNow=0;
+				}
+				else
+				{
+					if(iNow==arr.length)
+					{
+						clear();
+						return;
+					}
+				}
+			}
+			tab();
+		};
+
+		oBtn1.onclick=function (){
+			loop=true;
+			this.disabled=true;
+			tab();
+		};
+		oBtn2.onclick=function (){
+			rnd=true;
+			this.disabled=true;
+			tab();
+		};
+		oPrev.onclick=function (){
+			if(rnd)
+			{
+				iNow=random(0,arr.length);
+			}
+			else
+			{
+				iNow--;	
+			}
+			if(loop)
+			{
+				if(iNow==arr.length)
+				{
+					iNow=0;
+				}
+				else
+				{
+					if(iNow==arr.length)
+					{
+						clear();
+						return;
+					}
+				}
+			}
+			tab();
+		};
+		oNext.onclick=function (){
+			if(rnd)
+			{
+				iNow=random(0,arr.length);
+			}
+			else
+			{
+				iNow++;	
+			}
+			if(loop)
+			{
+				if(iNow==arr.length)
+				{
+					iNow=0;
+				}
+				else
+				{
+					if(iNow==arr.length)
+					{
+						clear();
+						return;
+					}
+				}
+			}
+			tab();
+		};
+		
+		/*oA.ontimeupdate=function (){
+			localStorage.time=oA.currentTime;
+		};*/
+		
+		oPause.onclick=function (){	
+			if(oPause.innerHTML=='||')
+			{
+				oA.pause();
+				clear();
+				oPause.innerHTML='>>';
+			}	
+			else
+			{
+				oA.play();
+				tab();
+				oPause.innerHTML='||';
+				//oA.currentTime=localSotrage.time;
+			}	
+			
+			
+		};
+	};
+	</script>
+</head>
+<body>
+	<div class="box">
+		<div class="left">
+			<img src="images/bg.png">
+			<h3 id="name">薛之谦--演员</h3>
+			<div class="group">
+				<a href="javascript:;" id="prev"><</a>
+				<a href="javascript:;" id="pause">||</a>
+				<a href="javascript:;" id="next">></a>
+			</div>
+			<div class="type">
+				<input type="button" value="循环播放" id="btn1">
+				<input type="button" value="随机播放" id="btn2">
+			</div>
+		</div>
+		<div class="right">
+			<h2>PlayList</h2>
+			<audio src="xzq/演员.mp3" id="a1" controls autoplay ></audio>
+			<ul>
+				<li>薛之谦--演员<i></i></li>
+				<li>薛之谦--绅士<i></i></li>
+				<li>为你而活<i></i></li>
+				<li>沙宝亮--野子<i></i></li>
+				<li>迷人的危险<i></i></li>
+				<li>浪漫来袭<i></i></li>
+				<li>有一个人<i></i></li>
+				<li>李白<i></i></li>
+				<li>别找我麻烦<i></i></li>
+				<li>最长的电影<i></i></li>
+				<li>一想到你呀<i></i></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
